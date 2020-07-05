@@ -8,6 +8,10 @@ x[1]    # single bracket operator using numeric index ie. 1
 
 x[1:4]    # single bracket operator using numeric index ie. 1 to 4
 
+x[c(1,2)]  # when we want 1st and 2nd elements
+
+x[c(-1,-2)]  #when we want everything except the first and second elements
+
 x[ x > "a"]   # single bracket operator using logical indexing ( using alphabetic order logic )
 
 logical_vector <- ( x > "a")    # creating your own logical vector
@@ -141,6 +145,11 @@ print(fault)
 
 corrected_data <- faulty_data[!fault]
 print(corrected_data) #printed original vector without the faults
+
+temporary1<- c( -1, -5,0,NA, 7,NA,-3,NA,9)
+# we want the data that is positive as well as free of NA
+
+temporary1[ !is.na(temporary1) & temporary1 > 0]
 
 
 ##### when you want to take the subset of two vectors without NAs
