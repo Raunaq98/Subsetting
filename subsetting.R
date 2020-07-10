@@ -133,5 +133,84 @@ list3[["a",exact=FALSE]]
 
 
 
+####################### 
 
+temp0 <- data.frame("var1"=sample(1:5),"var2"=sample(6:10),"var3"=sample(11:15))
+#   var1 var2 var3
+# 1    4    6   12
+# 2    3   10   11
+# 3    5    9   13
+# 4    2    7   14
+# 5    1    8   15
 
+temp0<- temp0[sample(1:5),]; temp0$var2[c(1,3)]=NA
+#   var1 var2 var3
+# 4    2   NA   14
+# 2    3   10   11
+# 5    1   NA   15
+# 1    4    6   12
+# 3    5    9   13
+
+temp0[1:2,"var2"]
+# [1] NA 10
+
+temp0[ (temp0$var1 <= 3 & temp0$var3 >11) ,]
+#   var1 var2 var3
+# 4    2   NA   14
+# 5    1   NA   15
+
+temp0[ (temp0$var1 <= 3 | temp0$var3 >15) ,]
+#     var1 var2 var3
+# 4    2   NA   14
+# 2    3   10   11
+# 5    1   NA   15
+
+temp0[temp0$var2>8,]
+#      var1 var2 var3
+# NA     NA   NA   NA
+# 2       3   10   11
+# NA.1   NA   NA   NA
+# 3       5    9   13
+
+# this can be fixed by :
+
+temp0[which(temp0$var2>8),]   # "which" returns the indices at which var2 is actually greater than 8 and there are no NAs
+#   var1 var2 var3
+# 2    3   10   11
+# 3    5    9   13
+
+sort(temp0$var1)   #increasing order
+# [1] 1 2 3 4 5
+
+sort(temp0$var1, decreasing = TRUE)
+# [1] 5 4 3 2 1
+
+sort(temp0$var2, na.last = TRUE)
+#[1]  6  9 10 NA NA
+
+sort(temp0$var2)
+# [1]  6  9 10
+
+#sorting temp0 by the values of var1
+
+temp_var1_sort <- temp0[order(temp0$var1),]
+#   var1 var2 var3
+#5    1   NA   15
+#4    2   NA   14
+#2    3   10   11
+#1    4    6   12
+#3    5    9   13
+
+temp_var1var3_sort <- temp0[order(temp0$var1,temp0$var3),]
+# had there been multiple values of var 3 for a single var1,
+# temp0 wouldve first been sorted according to var1
+# and thenvar3 wouldve been used to further sort
+
+temp0$var4 <- c(11,22,33,44,55)
+temp0
+#    var1 var2 var3 var4
+# 4    2   NA   14   11
+# 2    3   10   11   22
+# 5    1   NA   15   33
+# 1    4    6   12   44
+# 3    5    9   13   55
